@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; 
 
-public class UIScript : MonoBehaviour
+public class UIGazeScript : MonoBehaviour
 {
     public void OnStartClick()
     {
