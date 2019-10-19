@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 345924307}
   - component: {fileID: 345924306}
   - component: {fileID: 345924305}
+  - component: {fileID: 345924309}
   m_Layer: 0
   m_Name: to scene 3
   m_TagString: Untagged
@@ -294,6 +295,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345924309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345924304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f04c73fa624d94458ad4d5a9830df30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newLeve: Location3Scene
 --- !u!1 &621686747
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +320,7 @@ GameObject:
   - component: {fileID: 621686750}
   - component: {fileID: 621686749}
   - component: {fileID: 621686748}
+  - component: {fileID: 621686752}
   m_Layer: 0
   m_Name: return to scene 1
   m_TagString: Untagged
@@ -385,6 +400,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &621686752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621686747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f04c73fa624d94458ad4d5a9830df30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newLeve: SampleScene
 --- !u!1 &645085309
 GameObject:
   m_ObjectHideFlags: 0

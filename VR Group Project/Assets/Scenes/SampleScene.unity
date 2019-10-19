@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 705703957}
   - component: {fileID: 705703956}
   - component: {fileID: 705703955}
+  - component: {fileID: 705703958}
   m_Layer: 0
   m_Name: To_Area_2
   m_TagString: Untagged
@@ -212,6 +213,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705703953}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &705703958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705703953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f04c73fa624d94458ad4d5a9830df30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newLeve: Location2ElectricBoogaloo
 --- !u!1 &1285391108
 GameObject:
   m_ObjectHideFlags: 0
