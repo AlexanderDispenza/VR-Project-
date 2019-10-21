@@ -1806,9 +1806,9 @@ MonoBehaviour:
   ProgressBar: {fileID: 798982450}
   TimerText: {fileID: 727178582}
   m_ActionSet:
-    actionSetPath: 
+    actionSetPath: /actions/default
   m_BooleanAction:
-    actionPath: 
+    actionPath: /actions/default/in/InteractUI
     needsReinit: 0
   m_TouchPosition:
     actionPath: 
