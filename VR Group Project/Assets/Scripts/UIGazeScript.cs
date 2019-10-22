@@ -86,6 +86,7 @@ public class UIGazeScript: MonoBehaviour
             if (EventSystem.current)
                 EventSystem.current.SetSelectedGameObject(null);
             timer = 0;
+            TimerText.text = "0.00";
             ProgressBar.fillAmount = 0.0f; 
         }
     }
