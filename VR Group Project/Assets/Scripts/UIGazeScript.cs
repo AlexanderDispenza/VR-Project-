@@ -15,7 +15,7 @@ public class UIGazeScript: MonoBehaviour
     public string inputButton = "Fire1";
 
     public bool timedClick = true;
-    public float delay = 2.0f;
+    public float delay; 
     float timer;
     float scaleFactor;
 
@@ -36,13 +36,12 @@ public class UIGazeScript: MonoBehaviour
     void Start()
     {
         button = GetComponent<Button>();
+        delay = 3.0f; 
     }
 
     void Update()
     {
         isSelected = false;
-
-        scaleFactor = timer / delay; 
 
         Ray RightHandRayCast = new Ray(RightHand.position, RightHand.rotation * Vector3.forward);
         Ray LeftHandRayCast = new Ray(LeftHand.position, LeftHand.rotation * Vector3.forward);
@@ -76,8 +75,14 @@ public class UIGazeScript: MonoBehaviour
             if (timedClick)
             {
                 timer += Time.deltaTime;
+                scaleFactor = timer / delay;
                 TimerText.text = timer.ToString();
-                ProgressBar.fillAmount = Mathf.Lerp(0, 1, scaleFactor);
+                ProgressBar.fillAmount = scaleFactor;
+
+                if (timer >= delay + 5.0f)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
             }
         }
 
@@ -96,7 +101,6 @@ public class UIGazeScript: MonoBehaviour
     {
         if (timer >= delay)
         {
-            button.onClick.Invoke();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             Debug.Log("Button Pressed!");
         }
