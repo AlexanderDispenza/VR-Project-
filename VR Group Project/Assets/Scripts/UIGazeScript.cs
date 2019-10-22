@@ -25,21 +25,17 @@ public class UIGazeScript: MonoBehaviour
     public Image ProgressBar;
     public TextMeshProUGUI TimerText;
 
-    public SteamVR_ActionSet m_ActionSet;
-    public SteamVR_Action_Boolean m_BooleanAction;
-    public SteamVR_Action_Vector2 m_TouchPosition;
+
 
     void Awake()
     {
         RightHand = GameObject.Find("Player/SteamVRObjects/RightHand").transform;
         LeftHand = GameObject.Find("Player/SteamVRObjects/LeftHand").transform;
-        m_BooleanAction = SteamVR_Actions._default.GrabPinch; 
     }
 
     void Start()
     {
         button = GetComponent<Button>();
-        m_ActionSet.Activate(SteamVR_Input_Sources.Any, 0, true);
     }
 
     void Update()
@@ -82,21 +78,26 @@ public class UIGazeScript: MonoBehaviour
                 timer += Time.deltaTime;
                 TimerText.text = timer.ToString();
                 ProgressBar.fillAmount = Mathf.Lerp(0, 1, scaleFactor);
-
-                if (timer >= delay && m_BooleanAction.GetStateDown(SteamVR_Input_Sources.Any))
-                {
-                    button.onClick.Invoke();
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                    Debug.Log("Button Pressed!");
-                }
             }
         }
+
         else
         {
             if (EventSystem.current)
                 EventSystem.current.SetSelectedGameObject(null);
             timer = 0;
             ProgressBar.fillAmount = 0.0f; 
+        }
+    }
+
+
+    public void StartGame ()
+    {
+        if (timer >= delay)
+        {
+            button.onClick.Invoke();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Debug.Log("Button Pressed!");
         }
     }
 }
