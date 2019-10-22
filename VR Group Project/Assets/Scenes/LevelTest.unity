@@ -1808,7 +1808,7 @@ MonoBehaviour:
   m_ActionSet:
     actionSetPath: /actions/default
   m_BooleanAction:
-    actionPath: /actions/default/in/InteractUI
+    actionPath: /actions/default/in/GrabPinch
     needsReinit: 0
   m_TouchPosition:
     actionPath: 

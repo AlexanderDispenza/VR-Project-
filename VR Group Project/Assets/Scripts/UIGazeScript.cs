@@ -33,7 +33,7 @@ public class UIGazeScript: MonoBehaviour
     {
         RightHand = GameObject.Find("Player/SteamVRObjects/RightHand").transform;
         LeftHand = GameObject.Find("Player/SteamVRObjects/LeftHand").transform;
-        m_BooleanAction = SteamVR_Actions._default.InteractUI; 
+        m_BooleanAction = SteamVR_Actions._default.GrabPinch; 
     }
 
     void Start()
@@ -84,9 +84,11 @@ public class UIGazeScript: MonoBehaviour
                 ProgressBar.fillAmount = Mathf.Lerp(0, 1, scaleFactor);
 
                 if (timer >= delay && m_BooleanAction.GetStateDown(SteamVR_Input_Sources.Any))
+                {
                     button.onClick.Invoke();
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                     Debug.Log("Button Pressed!");
+                }
             }
         }
         else
