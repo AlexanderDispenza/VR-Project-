@@ -15,7 +15,8 @@ public class UIGazeScript: MonoBehaviour
     public bool timedClick = true;
     public bool clicker = true;
     public bool highlight = true;
-    public bool isGazeBazed = true; 
+    public bool isGazeBazed = true;
+    bool SelectAudioPlayed = false; 
 
     public string inputButton = "Fire1";
 
@@ -23,6 +24,7 @@ public class UIGazeScript: MonoBehaviour
     public float delay; 
     float timer;
     float scaleFactor;
+    float volume; 
 
     Transform RightHand;
     Transform LeftHand;
@@ -30,10 +32,15 @@ public class UIGazeScript: MonoBehaviour
 
     public Image ProgressBar;
     public TextMeshProUGUI TimerText;
+    public TextMeshProUGUI VolumeText; 
     public TextMeshProUGUI GazeBasedIndicatorText;
 
     public GameObject MainPanel;
-    public GameObject OptionsPanel; 
+    public GameObject OptionsPanel;
+
+    AudioSource Intro;
+    AudioSource Click;
+    AudioSource Select; 
 
     void Awake()
     {
@@ -44,12 +51,18 @@ public class UIGazeScript: MonoBehaviour
         OptionsPanel = GameObject.Find("Menu/Canvas/Main/Settings");
         GazeBasedIndicatorButton = GameObject.Find("Menu/Canvas/Main/Settings/GBIndicator").GetComponent<Button>();
         GazeBasedIndicatorText = GameObject.Find("Menu/Canvas/Main/Settings/GBIndicator/Text").GetComponent<TextMeshProUGUI>();
+        VolumeText = GameObject.Find("Menu/Canvas/Main/Settings/VolumeAmount").GetComponent<TextMeshProUGUI>();
+        Intro = GameObject.Find("AudioClips/Intro").GetComponent<AudioSource>();
+        Click = GameObject.Find("AudioClips/Click").GetComponent<AudioSource>();
+        Select = GameObject.Find("AudioClips/Select").GetComponent<AudioSource>();
     }
 
     void Start()
     {
         button = GetComponent<Button>();
-        delay = 3.0f; 
+        delay = 3.0f;
+        volume = 1.0f;
+        Intro.Play(); 
     }
 
     void Update()
@@ -72,7 +85,7 @@ public class UIGazeScript: MonoBehaviour
         if (Physics.Raycast(RightHandRayCast, out hit))
         {
             isSelected = true;
-            if (timedClick)
+            if (timedClick && isGazeBazed == false)
             {
                 timer += Time.deltaTime;
                 scaleFactor = timer / delay;
@@ -82,10 +95,11 @@ public class UIGazeScript: MonoBehaviour
                 button = hit.collider.transform.parent.GetComponent<Button>();
                 button.Select();
 
-                if (timer >= delay && hit.collider != null && hit.collider.transform.parent.tag.Equals("UIButton") && isGazeBazed == true)
+                if (SelectAudioPlayed == false)
                 {
-                    button.onClick.Invoke();
-                }
+                    Select.Play();
+                    SelectAudioPlayed = true; 
+                }           
             }
         }
 
@@ -93,7 +107,7 @@ public class UIGazeScript: MonoBehaviour
         {
             isSelected = true;
 
-            if (timedClick)
+            if (timedClick && isGazeBazed == false)
             {
                 timer += Time.deltaTime;
                 scaleFactor = timer / delay;
@@ -103,9 +117,10 @@ public class UIGazeScript: MonoBehaviour
                 button = hit2.collider.transform.parent.GetComponent<Button>();
                 button.Select();
 
-                if (timer >= delay && hit2.collider != null && hit2.collider.transform.parent.tag.Equals("UIButton") && isGazeBazed == true)
+                if (SelectAudioPlayed == false)
                 {
-                    button.onClick.Invoke();
+                    Select.Play();
+                    SelectAudioPlayed = true;
                 }
             }
         }
@@ -115,7 +130,7 @@ public class UIGazeScript: MonoBehaviour
 
             isSelected = true;
 
-            if (timedClick)
+            if (timedClick && isGazeBazed == true)
             {
                 timer += Time.deltaTime;
                 scaleFactor = timer / delay;
@@ -124,6 +139,12 @@ public class UIGazeScript: MonoBehaviour
 
                 button = hit3.collider.transform.parent.GetComponent<Button>();
                 button.Select();
+
+                if (SelectAudioPlayed == false)
+                {
+                    Select.Play();
+                    SelectAudioPlayed = true;
+                }
 
                 if (timer >= delay && hit3.collider != null && hit3.collider.transform.parent.tag.Equals("UIButton") && isGazeBazed == true)
                 {
@@ -140,11 +161,14 @@ public class UIGazeScript: MonoBehaviour
     {
         if (timer >= delay)
         {
+            Click.Play();
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             Debug.Log("Button Pressed!");
             timer = 0.0f;
             TimerText.text = "0.00";
             ProgressBar.fillAmount = 0.0f;
+            SelectAudioPlayed = false;
         }
     }
 
@@ -152,11 +176,14 @@ public class UIGazeScript: MonoBehaviour
     {
         if (timer >= delay)
         {
+            Click.Play();
+
             MainPanel.SetActive(false);
             OptionsPanel.SetActive(true);
             timer = 0.0f;
             TimerText.text = "0.00";
             ProgressBar.fillAmount = 0.0f;
+            SelectAudioPlayed = false;
         }
     }
 
@@ -164,11 +191,14 @@ public class UIGazeScript: MonoBehaviour
     {
         if (timer >= delay)
         {
+            Click.Play();
+
             OptionsPanel.SetActive(false);
             MainPanel.SetActive(true);
             timer = 0.0f;
             TimerText.text = "0.00";
             ProgressBar.fillAmount = 0.0f;
+            SelectAudioPlayed = false;
         }
     }
 
@@ -176,10 +206,13 @@ public class UIGazeScript: MonoBehaviour
     {
         if (timer >= delay)
         {
+            Click.Play();
+
             Application.Quit();
             timer = 0.0f;
             TimerText.text = "0.00";
             ProgressBar.fillAmount = 0.0f;
+            SelectAudioPlayed = false;
         }
     }
 
@@ -187,6 +220,8 @@ public class UIGazeScript: MonoBehaviour
     {
         if (timer >= delay)
         {
+            Click.Play();
+
             var GetColors = GazeBasedIndicatorButton.colors; 
             isGazeBazed = !isGazeBazed;
             GazeBasedIndicatorText.text = isGazeBazed.ToString();
@@ -205,6 +240,45 @@ public class UIGazeScript: MonoBehaviour
             timer = 0.0f;
             TimerText.text = "0.00";
             ProgressBar.fillAmount = 0.0f;
+            SelectAudioPlayed = false;
+        }
+    }
+
+    public void IncreaseVolume()
+    {
+        if (timer >= delay)
+        {
+            Click.Play();
+
+            Intro.volume = volume;
+            Click.volume = volume;
+            Select.volume = volume; 
+
+            volume = volume + 0.5f;
+            VolumeText.text = "(" + volume.ToString() + ")";
+            timer = 0.0f;
+            TimerText.text = "0.00";
+            ProgressBar.fillAmount = 0.0f;
+            SelectAudioPlayed = false;
+        }
+    }
+
+    public void DecreaseVolume()
+    {
+        if (timer >= delay)
+        {
+            Click.Play();
+
+            Intro.volume = volume;
+            Click.volume = volume;
+            Select.volume = volume;
+
+            volume = volume - 0.5f;
+            VolumeText.text = "(" + volume.ToString() + ")";
+            timer = 0.0f;
+            TimerText.text = "0.00";
+            ProgressBar.fillAmount = 0.0f;
+            SelectAudioPlayed = false;
         }
     }
 }
