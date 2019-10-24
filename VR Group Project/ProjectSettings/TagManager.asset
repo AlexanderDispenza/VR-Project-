@@ -7,6 +7,9 @@ TagManager:
   - UIButton
   - LeftHand
   - RightHand
+  - Start
+  - Options
+  - Exit
   layers:
   - Default
   - TransparentFX
