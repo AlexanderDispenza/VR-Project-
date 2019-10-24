@@ -24,7 +24,7 @@ public class UIGazeScript: MonoBehaviour
     public float delay; 
     float timer;
     float scaleFactor;
-    float volume; 
+    float volume;
 
     Transform RightHand;
     Transform LeftHand;
@@ -152,6 +152,12 @@ public class UIGazeScript: MonoBehaviour
                 }
             }
         }
+
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        
     }
 
 
