@@ -10,6 +10,7 @@ TagManager:
   - Start
   - Options
   - Exit
+  - ShowUI
   layers:
   - Default
   - TransparentFX
