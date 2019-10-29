@@ -15,6 +15,8 @@ public class LocationGazeScript : MonoBehaviour
 
     public float delay;
     float timer;
+    float Video1Timer;
+    float Video1scaleFactor; 
     float scaleFactor;
     float maximumFOV;
     float minFOV; 
@@ -22,18 +24,50 @@ public class LocationGazeScript : MonoBehaviour
     Transform camera;
 
     public Image ProgressBar;
+    public Image Video1ProgressBar; 
 
     public GameObject MainPanel;
+    public GameObject VideoPanel1;
+    public GameObject VideoPanel2; 
     public GameObject Exit;
+
+    public Text Video1ToLoad; 
 
     AudioSource ReadInfo; 
 
     void Awake()
     {
         camera = Camera.main.transform;
-        MainPanel = GameObject.Find("Loc/Canvas/Panel");
-        Exit = GameObject.Find("Loc/DoorExit/Canvas/Panel");
-        ProgressBar = GameObject.Find("Loc/DoorExit/Canvas/Panel/ProgressBar").GetComponent<Image>(); 
+
+        if (GameObject.Find("Loc/Canvas/Panel"))
+        {
+            MainPanel = GameObject.Find("Loc/Canvas/Panel");
+        }
+
+        if (GameObject.Find("Loc/DoorExit/Canvas/Panel"))
+        {
+            Exit = GameObject.Find("Loc/DoorExit/Canvas/Panel");
+        }
+
+        if (GameObject.Find("Loc/DoorExit/Canvas/Panel/ProgressBar"))
+        {
+            ProgressBar = GameObject.Find("Loc/DoorExit/Canvas/Panel/ProgressBar").GetComponent<Image>();
+        }
+
+        if(GameObject.Find("Loc/Canvas/Video1Panel")) 
+        {
+            VideoPanel1 = GameObject.Find("Loc/Canvas/Video1Panel");
+        }
+
+        if (GameObject.Find("Loc/Canvas/Video1Panel/Video1Progress"))
+        {
+            Video1ProgressBar = GameObject.Find("Loc/Canvas/Video1Panel/Video1Progress").GetComponent<Image>();
+        }
+
+        if (GameObject.Find("Loc/Canvas/Video1Panel/SceneToLoad"))
+        {
+            Video1ToLoad = GameObject.Find("Loc/Canvas/Video1Panel/SceneToLoad").GetComponent<Text>();
+        }
     }
 
     // Start is called before the first frame update
@@ -59,9 +93,9 @@ public class LocationGazeScript : MonoBehaviour
         {
             isSelected = true;
 
-            if (hit.collider.tag == "ShowUI")
+            if (hit.collider.tag == "ShowMainUI")
             {
-                MainPanel.SetActive(true);
+                MainPanel.SetActive(true);  
             }
 
             else if (hit.collider.tag == "Exit" && timedClick)
@@ -77,14 +111,50 @@ public class LocationGazeScript : MonoBehaviour
                     StartCoroutine(ExitFOV());
                 }
             }
+
+            else if (hit.collider.tag == "ShowVideo1")
+            {
+                VideoPanel1.SetActive(true);
+                Video1Timer = 0.0f;
+                Video1ProgressBar.fillAmount = 0.0f;
+            }
+
+            else if (hit.collider.transform.tag == "WatchVideo1")
+            {
+                Video1Timer += Time.deltaTime;
+                Video1scaleFactor = Video1Timer / delay;
+                Video1ProgressBar.fillAmount = Video1scaleFactor;
+
+
+                if (Video1Timer >= delay)
+                {
+                    SceneManager.LoadScene(int.Parse(Video1ToLoad.text));
+                }
+            }
+
+            else if (hit.collider.transform.tag == "DontWatch" && GameObject.Find("Loc/Canvas/Video1Panel"))
+            {
+                Video1Timer += Time.deltaTime;
+                Video1scaleFactor = Video1Timer / delay;
+                Video1ProgressBar.fillAmount = Video1scaleFactor;
+
+                if (Video1Timer >= delay)
+                {
+                    VideoPanel1.SetActive(false);
+                }
+               
+            }
         } 
 
         else
         {
             MainPanel.SetActive(false);
             Exit.SetActive(false);
+            VideoPanel1.SetActive(false);
             timer = 0.0f;
-            ProgressBar.fillAmount = 0.0f; 
+            Video1Timer = 0.0f; 
+            ProgressBar.fillAmount = 0.0f;
+            Video1ProgressBar.fillAmount = 0.0f; 
         }
     }
 

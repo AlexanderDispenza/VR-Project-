@@ -11,6 +11,13 @@ TagManager:
   - Options
   - Exit
   - ShowUI
+  - ShowMainUI
+  - ShowSecondaryUI
+  - ShowVideo1
+  - ShowVideo2
+  - WatchVideo1
+  - WatchVideo2
+  - DontWatch
   layers:
   - Default
   - TransparentFX
