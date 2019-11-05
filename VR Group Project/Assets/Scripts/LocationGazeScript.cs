@@ -141,8 +141,7 @@ public class LocationGazeScript : MonoBehaviour
                 if (Video1Timer >= delay)
                 {
                     VideoPanel1.SetActive(false);
-                }
-               
+                }            
             }
         } 
 
